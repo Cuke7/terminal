@@ -1,5 +1,5 @@
 <template>
-    <div ref="draggableContainer" id="draggable-container" @click="inputElement?.focus()" class="lg:text-lg w-4/5 h-4/5 sm:h-4/5 lg:h-3/5 lg:w-3/5 bg-black bg-opacity-90 rounded-xl flex-col flex">
+    <div ref="draggableContainer" id="draggable-container" @click="inputElement?.focus()" class="lg:text-lg w-4/5 h-4/5 md:w-3/5 md:h-3/5 2xl:w-1/2 bg-black bg-opacity-90 rounded-xl flex-col flex">
         <div class="rounded-t-2xl bg-gray-900 flex justify-between items-center p-2 px-3" id="draggable-header" @mousedown="dragMouseDown">
             <div class="font-mono font-bold text-lg text-white">💻 Welcome back sir</div>
 
@@ -26,6 +26,7 @@
 import { ref, onMounted, computed, watch } from "vue";
 import axios from "axios";
 import { search } from "fast-fuzzy";
+import { apps } from "../store";
 
 const inputElement = ref<HTMLInputElement | null>(null);
 
@@ -96,6 +97,27 @@ const commands = [
         },
         helpText: "open the wedding page on Notion",
     },
+    {
+        arg: "auditere",
+        execute() {
+            apps.appsList.push({ name: "🎧 Auditere", url: "https://auditereV2.netlify.app" });
+        },
+        helpText: "Rock on!",
+    },
+    {
+        arg: "aucellus",
+        execute() {
+            apps.appsList.push({ name: "🎧 Auditere", url: "https://aucellus.netlify.app/" });
+        },
+        helpText: "Birbs",
+    },
+    {
+        arg: "tbm",
+        execute() {
+            apps.appsList.push({ name: "🎧 Auditere", url: "https://tbmapp.netlify.app" });
+        },
+        helpText: "Wonderfull app for a wonderfull company",
+    },
     // {
     //     arg: "tbm",
     //     secondaryOption: true,
@@ -155,15 +177,14 @@ watch(
 );
 
 const printCmd = (cmd: string) => {
-    stack.value += '<div>'
+    stack.value += "<div>";
     stack.value += `<span class="text-blue-400">`;
     stack.value += prefix;
     stack.value += "</span>";
     stack.value += `<span class="text-white">`;
     stack.value += cmd;
     stack.value += "</span>";
-    stack.value += '</div>'
-
+    stack.value += "</div>";
 };
 
 const print = (text: string, css: string) => {

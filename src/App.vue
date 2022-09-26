@@ -1,13 +1,15 @@
 <template>
     <div class="w-screen h-screen flex justify-center items-center">
         <Terminal />
+        <Window v-for="(application, index) in apps.appsList" :key="index" :url="application.url" :name="application.name"></Window>
         <!-- <Auditere /> -->
     </div>
 </template>
 
 <script lang="ts" setup>
 import Terminal from "./components/Terminal.vue";
-import Auditere from "./components/Auditere.vue";
+import Window from "./components/Window.vue";
+import { apps } from "./store";
 </script>
 
 <style>
