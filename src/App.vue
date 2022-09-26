@@ -1,11 +1,13 @@
 <template>
     <div class="w-screen h-screen flex justify-center items-center">
         <Terminal />
+        <!-- <Auditere /> -->
     </div>
 </template>
 
 <script lang="ts" setup>
 import Terminal from "./components/Terminal.vue";
+import Auditere from "./components/Auditere.vue";
 </script>
 
 <style>
@@ -15,7 +17,7 @@ input {
 
 body {
     /* The image used */
-    background-image: url("./assets/bg2.jpg");
+    background-image: url("./assets/bg.jpg");
 
     /* Full height */
     height: 100%;
