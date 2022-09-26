@@ -204,19 +204,19 @@ const tab = (event: any) => {
     }
 };
 
-const getTime = () => {
-    const today = new Date();
-    const yyyy = today.getFullYear();
-    let hh = today.getHours();
-    let min = today.getMinutes();
-    let mm = today.getMonth() + 1; // Months start at 0!
-    let dd = today.getDate();
+// const getTime = () => {
+//     const today = new Date();
+//     const yyyy = today.getFullYear();
+//     let hh = today.getHours();
+//     let min = today.getMinutes();
+//     let mm = today.getMonth() + 1; // Months start at 0!
+//     let dd = today.getDate();
 
-    if (dd < 10) dd = "0" + dd;
-    if (mm < 10) mm = "0" + mm;
+//     if (dd < 10) dd = "0" + dd;
+//     if (mm < 10) mm = "0" + mm;
 
-    return dd + "/" + mm + "/" + yyyy;
-};
+//     return dd + "/" + mm + "/" + yyyy;
+// };
 
 // DRAGABLE
 const positions = {
