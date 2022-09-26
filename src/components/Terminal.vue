@@ -155,12 +155,15 @@ watch(
 );
 
 const printCmd = (cmd: string) => {
+    stack.value += '<div>'
     stack.value += `<span class="text-blue-400">`;
     stack.value += prefix;
     stack.value += "</span>";
     stack.value += `<span class="text-white">`;
     stack.value += cmd;
     stack.value += "</span>";
+    stack.value += '</div>'
+
 };
 
 const print = (text: string, css: string) => {
