@@ -1,8 +1,8 @@
 import { reactive } from 'vue'
 
 interface app {
-    name: String,
-    url: String
+    name: string,
+    url: string
 }
 
 export const apps = reactive({
