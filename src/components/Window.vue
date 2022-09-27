@@ -5,7 +5,7 @@
             <div class="flex gap-2">
                 <div class="bg-green-500 w-4 h-4 rounded-full" />
                 <div class="bg-yellow-500 w-4 h-4 rounded-full" />
-                <div class="bg-red-500 w-4 h-4 rounded-full" />
+                <div class="bg-red-500 w-4 h-4 rounded-full" @click="removeApp" />
             </div>
         </div>
         <iframe :src="url" width="400" height="650" frameborder="0" class="rounded-b-xl"></iframe>
@@ -14,11 +14,22 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
+import { apps } from "../store";
 
-defineProps({
+const props = defineProps({
     url: String,
     name: String,
 });
+
+const removeApp = () => {
+    for (let i = 0; i < apps.appsList.length; i++) {
+        let app = apps.appsList[i];
+        if (props.name == app.name) {
+            apps.appsList.splice(i, 1);
+            return;
+        }
+    }
+};
 
 // DRAGABLE
 const positions = {

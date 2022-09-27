@@ -54,13 +54,6 @@ const commands = [
         helpText: "print the gospel of the day",
     },
     {
-        arg: "clear",
-        execute() {
-            stack.value = "";
-        },
-        helpText: "clear the terminal",
-    },
-    {
         arg: "help",
         execute() {
             print("How to use", "text-lg text-green-500");
@@ -68,8 +61,7 @@ const commands = [
             print("Available commands :", "text-lg text-green-500");
             for (const cmd of commands) {
                 if (cmd.arg != "help") {
-                    print(cmd.arg, "text-white");
-                    print(cmd.helpText, "text-sm text-gray-400");
+                    printLine([cmd.arg, cmd.helpText], ["text-white", "text-sm text-gray-400"]);
                 }
             }
             // print("----------------------------", "text-lg text-green-500");
@@ -107,16 +99,44 @@ const commands = [
     {
         arg: "aucellus",
         execute() {
-            apps.appsList.push({ name: "🎧 Auditere", url: "https://aucellus.netlify.app/" });
+            apps.appsList.push({ name: "🐦 Aucellus", url: "https://aucellus.netlify.app/" });
         },
         helpText: "Birbs",
     },
     {
         arg: "tbm",
         execute() {
-            apps.appsList.push({ name: "🎧 Auditere", url: "https://tbmapp.netlify.app" });
+            apps.appsList.push({ name: "🚊 Tbm", url: "https://tbmapp.netlify.app" });
         },
         helpText: "Wonderfull app for a wonderfull company",
+    },
+    {
+        arg: "meteo",
+        async execute() {
+            let { data } = await axios.get("/.netlify/functions/meteo");
+            let day = null;
+            for (const time of data.list) {
+                let date = formatDate(time.dt);
+                if (!day) {
+                    day = date.split("/")[0];
+                    print(date.split(" - ")[0], "text-green-400 font-bold");
+                }
+                if (date.split("/")[0] == day) {
+                    printLine([date.split(" - ")[1], time.main.temp + "°", "(" + time.weather[0].description + ")"], ["text-blue-500", "text-white", "text-gray-400 text-sm"]);
+                } else {
+                    day = date.split("/")[0];
+                    print(date.split(" - ")[0], "text-green-400 font-bold");
+                }
+            }
+        },
+        helpText: "Weather information",
+    },
+    {
+        arg: "clear",
+        execute() {
+            stack.value = "";
+        },
+        helpText: "clear the terminal",
     },
     // {
     //     arg: "tbm",
@@ -166,6 +186,18 @@ const cmd = computed(() => {
 //     }
 // });
 
+function formatDate(date: number) {
+    let test = new Date(date * 1000);
+    let hh = test.getHours();
+    let mm = test.getMonth() + 1; // Months start at 0!
+    let dd = test.getDate();
+    let mms = mm.toString();
+    let dds = dd.toString();
+    if (mm < 10) mms = "0" + mm.toString();
+    if (dd < 10) dds = "0" + dd.toString();
+    return dds + "/" + mms + " - " + hh + ":00";
+}
+
 watch(
     stack,
     () => {
@@ -190,6 +222,18 @@ const printCmd = (cmd: string) => {
 const print = (text: string, css: string) => {
     stack.value += `<div class="${css}">`;
     stack.value += "  " + text;
+    stack.value += "</div>";
+};
+
+const printLine = (textArr: string[], cssArr: string[]) => {
+    stack.value += "<div>";
+    for (let i = 0; i < textArr.length; i++) {
+        let text = textArr[i];
+        let css = cssArr[i];
+        stack.value += `<span class="${css}">`;
+        stack.value += "  " + text;
+        stack.value += "</span>";
+    }
     stack.value += "</div>";
 };
 
